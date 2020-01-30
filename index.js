@@ -9,7 +9,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static('./'));
 
 app.get('/', function(req, res) {
-    res.render('calc.html');
+    res.render('index.html');
 });
 
 
