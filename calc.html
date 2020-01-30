@@ -1,0 +1,159 @@
+<!-- Esta pagina excluye informacion de cabecera y meta para que pueda ser incrustado en paginas web -->
+
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<div class="container p-4">
+    <div class="row">
+        <div class="col-sm-3 col-md-5 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center font-weight-bold" style="color: #1b6d86;">Calculo de cuota</h4>
+                    <form name="calc" id="cc">
+                        <div class="form-group">
+                            <label for="amount" class="font-weight-bold text-secondary">Precio del bien</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend" id="amount">
+                                    <span class="input-group-text font-weight-bold">$</span>
+                                </div>
+                                <input type="number" id="ad" class="form-control font-weight-bold" name="adamount"
+                                    aria-label="Amount (to the nearest dollar)" required step="100">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cdate" class="font-weight-bold text-secondary">Plazo del Leasing</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend" id="cdate">
+                                    <span class="input-group-text font-weight-bold">&#9776;</span>
+                                </div>
+                                <select class="form-control font-weight-bold" id="closingDateSelect" name="percent">
+                                    <option value=1>1 Año</option>
+                                    <option value=2>2 Años</option>
+                                    <option value=3>3 Años</option>
+                                    <option value=4>4 Años</option>
+                                    <option value=5>5 Años o mas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prim" class="font-weight-bold text-secondary">Monto de prima</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend" id="prim">
+                                    <span class="input-group-text font-weight-bold">$</span>
+                                </div>
+                                <input type="number" id="prima" class="form-control font-weight-bold" name="mprima"
+                                    aria-label="Amount (to the nearest dollar)" required step="100">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="op" class="font-weight-bold text-secondary">Opcion de compra</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend" id="op">
+                                    <span class="input-group-text font-weight-bold">$</span>
+                                </div>
+                                <input type="number" id="opc" class="form-control font-weight-bold" name="oc"
+                                    aria-label="Amount (to the nearest dollar)" required step="100">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cm" class="font-weight-bold text-secondary">Cuota Mensual</label>
+                            <div class="input-group mb-4" id="cm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold ">$</span>
+                                </div>
+                                <input type="text" id="cuota" class="form-control bg-light font-weight-bold" style="color: #1b6d86;"
+                                    name="cuotam" aria-label="Cash Received Upon Advance" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+<button type="button" class="btn btn-outline-info btn-block font-weight-bold" id="clc"
+                                onclick="calculate()" name="submit">Calcular</button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-info btn-block font-weight-bold"
+                                onclick="clearText()" name="clear">Limpiar</button>
+                              
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/0ceb5843c8.js"></script>
+<script>
+
+
+    function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+        try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+        } catch (e) {
+            console.log(e)
+        }
+    };
+    var interes;
+    function calculate() {
+
+        var precio = document.calc.adamount.value;
+        var anio = document.calc.percent.value;
+
+        //valida si es nulo es cero
+        var prima = document.calc.mprima.value;
+         if(prima.length == 0){
+             prima = 0;
+         }
+         var opcionCompra = document.calc.oc.value;
+         if(opcionCompra.length == 0 ){
+             opcionCompra = 0;
+         }
+
+         if(anio == 1){
+             interes = (9/12)/100;
+
+         }
+         else if(anio == 2){
+             interes = (10/12)/100;
+         }
+         else if(anio == 3){
+             interes = (11/12)/100;
+         }
+         else if(anio == 4){
+             interes = (12/12)/100;
+         }
+         else if(anio = 5){
+             interes = (15/12)/100;
+         }
+                       
+//  FORMULA = (intereses * (1+intereses)^(años*12) * (Monto-Prima-OPC)) 
+//                       / (((1+intereses)^(años*12))-1)
+
+        var seguro = ((((precio/1.13)*0.065)*0.45)/12)*1.25; //factores de riesgo 
+
+        var capital = (precio-prima-opcionCompra)
+        var periodo;
+         if(prima>0){
+             periodo = (anio*12) - 1;
+         }
+         else if(prima == 0){
+             periodo = (anio*12);
+         }
+        
+       var cuotaMensual = capital * (((Math.pow((1+interes),periodo))*interes) / ((Math.pow((1+interes),periodo)) - 1));
+        document.calc.cuotam.value = formatMoney((cuotaMensual+seguro));
+       
+    };
+
+    function clearText() {
+        document.getElementById("cc").reset();
+    };
+</script>
