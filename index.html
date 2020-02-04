@@ -29,7 +29,12 @@
                                     <option value=2>2 Años</option>
                                     <option value=3>3 Años</option>
                                     <option value=4>4 Años</option>
-                                    <option value=5>5 Años o mas</option>
+                                    <option value=5>5 Años</option>
+                                    <option value=6>6 Años</option>
+                                    <option value=7>7 Años</option>
+                                    <option value=8>8 Años</option>
+                                    <option value=9>9 Años</option>
+                                    <option value=10>10 Años</option>
                                 </select>
                             </div>
                         </div>
@@ -64,6 +69,36 @@
                                     name="cuotam" aria-label="Cash Received Upon Advance" readonly>
                             </div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="aho" class="font-weight-bold text-secondary">Ahorro Energetico</label>
+                            <div class="input-group mb-4" id="aho">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold ">$</span>
+                                </div>
+                                <input type="text" id="ahorro" class="form-control bg-light font-weight-bold" style="color: #1b6d86;"
+                                    name="ahorroe" aria-label="Cash Received Upon Advance" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ener" class="font-weight-bold text-secondary">Eficiencia Energetica</label>
+                                <div class="input-group mb-4" id="ener">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text font-weight-bold ">$</span>
+                                    </div>
+                                    <input type="text" id="energia" class="form-control bg-light font-weight-bold" style="color: #1b6d86;"
+                                        name="energia" aria-label="Cash Received Upon Advance" readonly>
+                                </div>
+
+                        </div>
+
+
+
+
+
+
+
+
                         <div class="form-group">
 <button type="button" class="btn btn-outline-info btn-block font-weight-bold" id="clc"
                                 onclick="calculate()" name="submit">Calcular</button>
@@ -80,7 +115,6 @@
     </div>
 </div>
 
-<script src="https://kit.fontawesome.com/0ceb5843c8.js"></script>
 <script>
 
 
@@ -148,6 +182,8 @@
         
        var cuotaMensual = capital * (((Math.pow((1+interes),periodo))*interes) / ((Math.pow((1+interes),periodo)) - 1));
         document.calc.cuotam.value = formatMoney((cuotaMensual+seguro));
+        document.calc.mprima.value = prima;
+        document.calc.oc.value = opcionCompra;
        
     };
 
